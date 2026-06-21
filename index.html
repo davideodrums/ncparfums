@@ -243,6 +243,20 @@ footer .copy a{color:var(--gold)}
 .card .btn-mini{width:100%;justify-content:center;padding:12px}
 .btn-sold{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:var(--muted)}
 .btn-sold:hover{background:rgba(226,59,59,.14);border-color:rgba(226,59,59,.5);color:#ffcaca;transform:translateY(-2px)}
+.filters{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;max-width:1180px;margin:40px auto 6px}
+.search{display:flex;align-items:center;gap:10px;flex:1;min-width:240px;max-width:430px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:40px;padding:11px 20px;transition:.35s}
+.search:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.12)}
+.search svg{width:18px;height:18px;color:var(--gold);flex:none}
+.search input{background:none;border:none;outline:none;color:var(--txt);font-family:'Jost';font-size:14px;width:100%;letter-spacing:.3px}
+.search input::placeholder{color:var(--muted)}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:40px;cursor:pointer;font-family:'Jost';font-size:12px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.015);transition:.4s cubic-bezier(.2,.8,.2,1)}
+.chip:hover{color:var(--gold-lite);border-color:var(--gold)}
+.chip .count{font-size:11px;color:var(--muted);background:rgba(255,255,255,.06);border-radius:20px;padding:1px 8px;transition:.4s}
+.chip.active{background:linear-gradient(120deg,#9a7b22,#d4af37 55%,#f6e7a8);color:#0a0a0a;border-color:transparent;box-shadow:0 8px 24px rgba(212,175,55,.3)}
+.chip.active .count{background:rgba(0,0,0,.18);color:#0a0a0a}
+.no-results{display:none;text-align:center;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:25px;margin:54px auto;font-style:italic}
+@media(max-width:620px){.filters{flex-direction:column;align-items:stretch}.search{max-width:none}.chips{justify-content:center}}
 .reveal{opacity:0;transform:translateY(34px);transition:.9s cubic-bezier(.2,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
 [id]{scroll-margin-top:88px}
@@ -361,6 +375,17 @@ footer .copy a{color:var(--gold)}
     <p class="eyebrow reveal">La colección</p>
     <h2 class="sec-title reveal">Nuestras <span class="gold-text">fragancias</span></h2>
     <p class="lead center reveal">Todos los precios corresponden al decant de 3 ml. Toca <strong>Pedir</strong> para escribirnos al instante por WhatsApp.</p>
+  </div>
+  <div class="filters reveal">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
+      <input id="search" type="text" placeholder="Buscar fragancia o marca…" autocomplete="off" aria-label="Buscar">
+    </div>
+    <div class="chips">
+      <button class="chip active" data-f="all">Todos <span class="count" id="c-all"></span></button>
+      <button class="chip" data-f="avail">Disponibles <span class="count" id="c-avail"></span></button>
+      <button class="chip" data-f="sold">Agotados <span class="count" id="c-sold"></span></button>
+    </div>
   </div>
   <div class="grid">
         <article class="card reveal">
@@ -532,6 +557,7 @@ footer .copy a{color:var(--gold)}
           </div>
         </article>
   </div>
+  <p class="no-results" id="noResults">No encontramos fragancias con esos filtros.</p>
 </section>
 
 <section class="process" id="pago">
@@ -635,6 +661,40 @@ addEventListener('mousemove',e=>{
   hb.forEach((b,i)=>{const d=(i-1);b.style.transform=`translate(${x*d*14}px, ${y*8}px)`+(b.classList.contains('mid')?' translateY(-2%)':'');});
 });
 }
+
+// ---- collection search + availability filter ----
+(function(){
+  const search=document.getElementById('search');
+  const chips=document.querySelectorAll('.chip');
+  const cards=[...document.querySelectorAll('.grid .card')];
+  const noResults=document.getElementById('noResults');
+  if(!search||!cards.length) return;
+  let filter='all';
+  const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const meta=cards.map(c=>({el:c,sold:c.classList.contains('sold'),txt:norm(c.querySelector('.card-name').textContent+' '+c.querySelector('.card-sub').textContent)}));
+  function apply(){
+    const q=norm(search.value.trim());
+    let vis=0;
+    meta.forEach(m=>{
+      const okF = filter==='all' || (filter==='avail'&&!m.sold) || (filter==='sold'&&m.sold);
+      const okQ = !q || m.txt.includes(q);
+      const show = okF&&okQ;
+      m.el.style.display = show?'':'none';
+      if(show) vis++;
+    });
+    noResults.style.display = vis?'none':'block';
+  }
+  chips.forEach(ch=>ch.addEventListener('click',()=>{
+    chips.forEach(x=>x.classList.remove('active'));
+    ch.classList.add('active');
+    filter=ch.dataset.f; apply();
+  }));
+  search.addEventListener('input',apply);
+  const total=meta.length, soldN=meta.filter(m=>m.sold).length;
+  document.getElementById('c-all').textContent=total;
+  document.getElementById('c-avail').textContent=total-soldN;
+  document.getElementById('c-sold').textContent=soldN;
+})();
 </script>
 </body>
 </html>
