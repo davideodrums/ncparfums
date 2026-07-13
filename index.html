@@ -103,19 +103,20 @@ nav.scrolled{
 .hero .ncsub{letter-spacing:11px;font-size:10px;color:var(--muted);margin:10px 0 26px}
 .hero h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(54px,13vw,140px);line-height:.86;letter-spacing:2px}
 .hero .script{font-family:'Italianno',cursive;font-size:clamp(64px,16vw,170px);line-height:.7;margin-top:-6px}
-.hero-carousel{position:relative;width:100%;max-width:660px;margin:22px auto 0}
-.hc-viewport{height:clamp(220px,32vh,340px);overflow:hidden;position:relative}
+.hero-carousel{position:relative;width:100%;max-width:660px;margin:30px auto 8px}
+.hc-viewport{height:clamp(230px,33vh,350px);overflow:hidden;position:relative}
 .hc-track{display:flex;align-items:center;height:100%;will-change:transform;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.hc-item{flex:0 0 auto;width:clamp(120px,25vw,168px);height:100%;display:grid;place-items:center;cursor:pointer;background:none;border:none;padding:0;opacity:.38;transform:scale(.7);transition:.55s cubic-bezier(.2,.9,.3,1)}
-.hc-item img{max-height:100%;max-width:94%;object-fit:contain;filter:drop-shadow(0 24px 30px rgba(0,0,0,.6))}
-.hc-item.active{opacity:1;transform:scale(1.14) translateY(-12px);z-index:3}
-.hc-item.active img{filter:drop-shadow(0 30px 34px rgba(0,0,0,.55)) drop-shadow(0 0 42px rgba(212,175,55,.4))}
-.hc-item:hover:not(.active){opacity:.65;transform:scale(.78)}
-.hc-arrow{position:absolute;top:34%;transform:translateY(-50%);z-index:6;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(8,8,12,.55);color:var(--gold-lite);display:grid;place-items:center;cursor:pointer;transition:.25s}
+.hc-item{flex:0 0 auto;width:clamp(92px,19vw,116px);height:100%;display:grid;place-items:center;cursor:pointer;background:none;border:none;padding:0;overflow:visible;opacity:.4;transform:scale(.78);z-index:1;transition:.55s cubic-bezier(.2,.9,.3,1)}
+.hc-item img{max-height:82%;max-width:min(160px,44vw);object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65))}
+.hc-item.active{opacity:1;transform:scale(1.16) translateY(-6px);z-index:5}
+.hc-item.active img{filter:drop-shadow(0 26px 30px rgba(0,0,0,.6)) drop-shadow(0 0 44px rgba(212,175,55,.42))}
+.hc-item.near{z-index:3;opacity:.55}
+.hc-item:hover:not(.active){opacity:.7}
+.hc-arrow{position:absolute;top:32%;transform:translateY(-50%);z-index:6;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(8,8,12,.55);color:var(--gold-lite);display:grid;place-items:center;cursor:pointer;transition:.25s}
 .hc-arrow:hover{border-color:var(--gold);color:#fff;transform:translateY(-50%) scale(1.06)}
 .hc-arrow:active{transform:translateY(-50%) scale(.92)}
 .hc-prev{left:0}.hc-next{right:0}
-.hc-info{text-align:center;margin-top:8px;min-height:150px}
+.hc-info{text-align:center;margin-top:14px;min-height:150px}
 .hc-info.anim{animation:hcUp .55s cubic-bezier(.2,.9,.3,1)}
 @keyframes hcUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .hc-brand{display:block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
@@ -145,12 +146,13 @@ nav.scrolled{
   .hero h1{font-size:clamp(46px,13vw,80px)}
   .hero .script{font-size:clamp(50px,15vw,86px);line-height:.85;margin:0 0 6px}
   .hero-carousel{max-width:100%;margin-top:18px}
-  .hc-viewport{height:clamp(200px,28vh,280px)}
-  .hc-item{width:40vw}
-  .hc-item.active{transform:scale(1.1) translateY(-8px)}
+  .hc-viewport{height:clamp(210px,29vh,290px)}
+  .hc-item{width:30vw}
+  .hc-item img{max-height:80%;max-width:42vw}
+  .hc-item.active{transform:scale(1.14) translateY(-5px)}
   .hc-arrow{width:40px;height:40px}
-  .hc-name{font-size:23px}
-  .hc-size{min-width:78px;padding:7px 12px}
+  .hc-name{font-size:22px}
+  .hc-size{min-width:76px;padding:7px 12px}
 }
 
 /* ---------- SECTIONS ---------- */
@@ -728,7 +730,7 @@ document.querySelectorAll('.grid .reveal').forEach((el,i)=>el.style.setProperty(
     const x=vp.clientWidth/2-(ci*iw+iw/2);
     track.style.transition=anim===false?'none':'';
     track.style.transform='translateX('+x+'px)';
-    items.forEach((it,i)=>it.classList.toggle('active',i===ci));
+    items.forEach((it,i)=>{it.classList.toggle('active',i===ci);it.classList.toggle('near',Math.abs(i-ci)===1);it.style.zIndex=(i===ci?5:(Math.abs(i-ci)===1?3:1));});
     renderInfo();
   }
   document.querySelector('.hc-prev').addEventListener('click',()=>{ci=(ci-1+N)%N;si=0;center();});
