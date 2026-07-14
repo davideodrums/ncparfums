@@ -106,8 +106,8 @@ nav.scrolled{
 .hero-carousel{position:relative;width:100%;max-width:660px;margin:30px auto 8px}
 .hc-viewport{height:clamp(340px,44vh,420px);overflow:hidden;position:relative}
 .hc-track{display:flex;align-items:flex-end;height:100%;will-change:transform;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.hc-item{flex:0 0 auto;width:clamp(92px,19vw,116px);height:100%;display:grid;place-items:end center;transform-origin:center bottom;cursor:pointer;background:none;border:none;padding:0;overflow:visible;opacity:.4;transform:scale(.78);z-index:1;transition:.55s cubic-bezier(.2,.9,.3,1)}
-.hc-item img{max-height:82%;max-width:min(160px,44vw);object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65))}
+.hc-item{flex:0 0 auto;width:clamp(92px,19vw,116px);height:100%;display:flex;align-items:flex-end;justify-content:center;transform-origin:center bottom;cursor:pointer;background:none;border:none;padding:0;overflow:visible;opacity:.4;transform:scale(.78);z-index:1;transition:.55s cubic-bezier(.2,.9,.3,1)}
+.hc-item img{flex:0 0 auto;max-height:82%;max-width:min(160px,44vw);object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65));pointer-events:none}
 .hc-item.active{opacity:1;transform:scale(1.39);transform-origin:center bottom;z-index:5}
 .hc-item.active img{filter:drop-shadow(0 26px 30px rgba(0,0,0,.6)) drop-shadow(0 0 44px rgba(212,175,55,.42))}
 .hc-item.near{z-index:3;opacity:.55}
@@ -786,7 +786,7 @@ document.querySelectorAll('.grid .reveal').forEach((el,i)=>el.style.setProperty(
   document.querySelector('.hc-prev').addEventListener('click',e=>{e.stopPropagation();ci=(ci-1+N)%N;si=0;center();});
   document.querySelector('.hc-next').addEventListener('click',e=>{e.stopPropagation();ci=(ci+1)%N;si=0;center();});
   let sx=0,drag=false,moved=0,swiped=false;
-  items.forEach((it,i)=>it.addEventListener('click',()=>{ if(swiped){swiped=false;return;} if(i===ci){return;} ci=i;si=0;center(); }));
+  vp.addEventListener('click',function(e){ if(swiped){swiped=false;return;} var iw=items[0].offsetWidth||150; var vr=vp.getBoundingClientRect(); var step=Math.round((e.clientX-(vr.left+vp.clientWidth/2))/iw); if(step<-2)step=-2; if(step>2)step=2; if(step!==0){ ci=((ci+step)%N+N)%N; si=0; center(); } });
   vp.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;drag=true;moved=0;swiped=false;track.style.transition='none';},{passive:true});
   vp.addEventListener('touchmove',e=>{if(!drag)return;moved=e.touches[0].clientX-sx;const iw=items[0].offsetWidth||150;const base=vp.clientWidth/2-(ci*iw+iw/2);track.style.transform='translateX('+(base+moved)+'px)';},{passive:true});
   vp.addEventListener('touchend',()=>{const iw=items[0].offsetWidth||150;if(moved<-iw*0.28){ci=(ci+1)%N;si=0;swiped=true;}else if(moved>iw*0.28){ci=(ci-1+N)%N;si=0;swiped=true;}moved=0;drag=false;center();});
