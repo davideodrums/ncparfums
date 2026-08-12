@@ -334,6 +334,12 @@ footer .copy a{color:var(--gold)}
 .cinta-group i{color:var(--gold);margin:0 22px;font-style:normal;opacity:.85;font-size:9px}
 @keyframes cintaScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:600px){.cinta{margin-top:18px}.cinta-group{font-size:10px;letter-spacing:2px}.cinta-group i{margin:0 14px}}
+
+/* --- movil: logo NC / PARFUMS apilado vertical --- */
+@media(max-width:600px){
+  .brand{flex-direction:column;align-items:flex-start;gap:1px}
+  .brand small{display:block!important;letter-spacing:4px;margin-top:1px}
+}
 </style>
 </head>
 <body>
@@ -416,13 +422,13 @@ footer .copy a{color:var(--gold)}
         
       </div>
     </div>
-    <div class="hero-cta">
+    <div class="cinta" aria-hidden="true"><div class="cinta-track"><span class="cinta-group">NUEVOS INGRESOS <i>&#10022;</i> ENV&Iacute;OS A TODO CARAZ <i>&#10022;</i> DECANTS ORIGINALES <i>&#10022;</i> 3 &middot; 5 &middot; 10 ML <i>&#10022;</i> PAGA CON YAPE O PLIN <i>&#10022;</i> PEDIDOS POR WHATSAPP <i>&#10022;</i> </span><span class="cinta-group">NUEVOS INGRESOS <i>&#10022;</i> ENV&Iacute;OS A TODO CARAZ <i>&#10022;</i> DECANTS ORIGINALES <i>&#10022;</i> 3 &middot; 5 &middot; 10 ML <i>&#10022;</i> PAGA CON YAPE O PLIN <i>&#10022;</i> PEDIDOS POR WHATSAPP <i>&#10022;</i> </span></div></div>
+      <div class="hero-cta">
       <a class="btn-primary" href="#coleccion">Ver colección
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a class="btn-ghost" href="https://wa.me/51975062400?text=Hola%20NC%20Parfums%20%F0%9F%91%8B%2C%20vengo%20del%20cat%C3%A1logo%20y%20quiero%20informaci%C3%B3n%20sobre%20sus%20decants." target="_blank" rel="noopener">Pedir</a>
     </div>
-    <div class="cinta" aria-hidden="true"><div class="cinta-track"><span class="cinta-group">NUEVOS INGRESOS <i>&#10022;</i> ENV&Iacute;OS A TODO CARAZ <i>&#10022;</i> DECANTS ORIGINALES <i>&#10022;</i> 3 &middot; 5 &middot; 10 ML <i>&#10022;</i> PAGA CON YAPE O PLIN <i>&#10022;</i> PEDIDOS POR WHATSAPP <i>&#10022;</i> </span><span class="cinta-group">NUEVOS INGRESOS <i>&#10022;</i> ENV&Iacute;OS A TODO CARAZ <i>&#10022;</i> DECANTS ORIGINALES <i>&#10022;</i> 3 &middot; 5 &middot; 10 ML <i>&#10022;</i> PAGA CON YAPE O PLIN <i>&#10022;</i> PEDIDOS POR WHATSAPP <i>&#10022;</i> </span></div></div>
   </div>
 </header>
 
@@ -844,9 +850,7 @@ document.querySelectorAll('.grid .reveal').forEach((el,i)=>el.style.setProperty(
   document.querySelector('.hc-next').addEventListener('click',e=>{e.stopPropagation();ci=(ci+1)%N;si=0;center();});
   /* --- AUTOPLAY: avanza solo; se pausa al pasar mouse/dedo por encima --- */
   let hcTimer=null,hcPaused=false;
-  function hcStart(){ if(hcTimer)clearInterval(hcTimer); hcTimer=setInterval(function(){ if(!hcPaused&&!document.hidden){ ci=(ci+1)%N; si=0; center(); } },1750); }
-  vp.addEventListener('mouseenter',function(){hcPaused=true;});
-  vp.addEventListener('mouseleave',function(){hcPaused=false;});
+  function hcStart(){ if(hcTimer)clearInterval(hcTimer); hcTimer=setInterval(function(){ if(!hcPaused&&!document.hidden){ ci=(ci+1)%N; si=0; center(); } },1400); }
   vp.addEventListener('touchstart',function(){hcPaused=true;},{passive:true});
   vp.addEventListener('touchend',function(){setTimeout(function(){hcPaused=false;},2500);},{passive:true});
   document.querySelector('.hc-prev').addEventListener('click',function(){hcPaused=true;setTimeout(function(){hcPaused=false;},4000);});
