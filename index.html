@@ -110,10 +110,10 @@ nav.scrolled{
 .hero .script{font-family:'Italianno',cursive;font-size:clamp(41px,10vw,109px);line-height:.7;box-sizing:content-box;padding:.4em 0;margin:-.42em 0 -.36em}
 .hero-carousel{position:relative;width:100%;max-width:660px;margin:2px auto 4px}
 .hc-viewport{height:clamp(266px,33vh,282px);overflow:hidden;position:relative}
-.hc-track{display:flex;align-items:flex-end;height:100%;will-change:transform;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.hc-item{flex:0 0 auto;width:clamp(92px,19vw,116px);height:100%;display:flex;align-items:flex-end;justify-content:center;transform-origin:center bottom;cursor:pointer;background:none;border:none;padding:0;overflow:visible;opacity:.4;transform:scale(.78);z-index:1;transition:.55s cubic-bezier(.2,.9,.3,1)}
+.hc-track{position:relative;height:100%;will-change:transform}
+.hc-item{flex:0 0 auto;width:clamp(92px,19vw,116px);height:100%;display:flex;align-items:flex-end;justify-content:center;transform-origin:center bottom;cursor:pointer;background:none;border:none;padding:0;overflow:visible;opacity:.4;transform:scale(.78);z-index:1;transition:.55s cubic-bezier(.2,.9,.3,1);position:absolute;left:50%;bottom:0;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .5s}
 .hc-item img{flex:0 0 auto;max-height:68%;max-width:min(176px,48vw);object-fit:contain;filter:drop-shadow(0 22px 26px rgba(0,0,0,.65));pointer-events:none}
-.hc-item.active{opacity:1;transform:scale(1.39);transform-origin:center bottom;z-index:5}
+.hc-item.active{opacity:1;transform-origin:center bottom;z-index:5}
 .hc-item.active img{filter:drop-shadow(0 26px 30px rgba(0,0,0,.6)) drop-shadow(0 0 44px rgba(212,175,55,.42))}
 .hc-item.near{z-index:3;opacity:.55}
 .hc-item:hover:not(.active){opacity:.7}
@@ -154,7 +154,7 @@ nav.scrolled{
   .hc-viewport{height:clamp(258px,31vh,286px)}
   .hc-item{width:30vw}
   .hc-item img{max-height:70%;max-width:46vw}
-  .hc-item.active{transform:scale(1.39);transform-origin:center bottom}
+  .hc-item.active{transform-origin:center bottom}
   .hc-arrow{width:40px;height:40px}
   .hc-name{font-size:22px}
   .hc-size{min-width:76px;padding:7px 12px}
@@ -259,6 +259,8 @@ footer .copy a{color:var(--gold)}
   padding:13px 20px;border-radius:40px;background:#1faf55;color:#fff;font-weight:500;font-size:14px;
   box-shadow:0 12px 34px rgba(31,175,85,.4);transition:.4s cubic-bezier(.2,.8,.2,1);opacity:0;transform:translateY(20px)}
 .fab.show{opacity:1;transform:none}
+.fab-ig{bottom:84px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);box-shadow:0 12px 34px rgba(214,41,118,.42)}
+.fab-ig:hover{box-shadow:0 16px 44px rgba(214,41,118,.55)}
 .fab:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(31,175,85,.55)}
 .fab svg{width:20px;height:20px}
 @media(max-width:560px){.fab span{display:none} .fab{padding:14px;border-radius:50%}}
@@ -301,7 +303,7 @@ footer .copy a{color:var(--gold)}
   body::before{display:none!important;}
   nav,nav.scrolled,.decant-card,.badge-star,.top{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;}
   nav.scrolled{background:rgba(8,8,12,.94)!important;}
-  .hc-item.active{transform:scale(1.39)!important;transform-origin:center bottom!important;}
+  .hc-item.active{transform-origin:center bottom!important;}
 }
 *{-webkit-tap-highlight-color:transparent}
 .hc-item:focus,.hc-item:focus-visible{outline:none;box-shadow:none}
@@ -771,6 +773,10 @@ footer .copy a{color:var(--gold)}
   <p class="copy">NC Parfums · Caraz · Decants de fragancias originales — Hecho con cariño · <a href="https://www.instagram.com/nc_parfums67/" target="_blank" rel="noopener">@nc_parfums67</a></p>
 </footer>
 
+<a class="fab fab-ig" id="fab-ig" href="https://www.instagram.com/nc_parfums67/" target="_blank" rel="noopener" aria-label="Instagram">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38C1.35 2.68.94 3.35.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.66-.67 1.07-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.13-.67-.66-1.34-1.07-2.13-1.38-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm6.4-11.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
+  <span>Instagram</span>
+</a>
 <a class="fab" id="fab" href="https://wa.me/51975062400?text=Hola%20NC%20Parfums%2C%20vengo%20del%20cat%C3%A1logo%20y%20quiero%20informaci%C3%B3n%20sobre%20sus%20decants." target="_blank" rel="noopener">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.728-.978z"/></svg>
   <span>WhatsApp</span>
@@ -781,12 +787,12 @@ footer .copy a{color:var(--gold)}
 </button>
 
 <script>
-const nav=document.getElementById('nav'),fab=document.getElementById('fab'),toTop=document.getElementById('toTop');
+const nav=document.getElementById('nav'),fab=document.getElementById('fab'),toTop=document.getElementById('toTop'),fabIg=document.getElementById('fab-ig');
 function onScroll(){
   const y=scrollY;
   nav.classList.toggle('scrolled', y>40);
   const show=y>window.innerHeight*0.6;
-  fab.classList.toggle('show', y>300);
+  fab.classList.toggle('show', y>300);if(fabIg)fabIg.classList.toggle('show', y>300);
   toTop.classList.toggle('show', show);
 }
 addEventListener('scroll',onScroll,{passive:true}); onScroll();
@@ -839,11 +845,17 @@ document.querySelectorAll('.grid .reveal').forEach((el,i)=>el.style.setProperty(
     info.classList.remove('anim'); void info.offsetWidth; info.classList.add('anim');
   }
   function center(anim){
-    const iw=items[0].offsetWidth||150;
-    const x=vp.clientWidth/2-(ci*iw+iw/2);
-    track.style.transition=anim===false?'none':'';
-    track.style.transform='translateX('+x+'px)';
-    items.forEach((it,i)=>{it.classList.toggle('active',i===ci);it.classList.toggle('near',Math.abs(i-ci)===1);it.style.zIndex=(i===ci?5:(Math.abs(i-ci)===1?3:1));});
+    const iw=items[0].offsetWidth||116;
+    const half=N/2;
+    track.style.transform='none';
+    items.forEach((it,i)=>{
+      let off=((i-ci)%N+N)%N; if(off>half) off-=N;
+      it.style.transition=(anim===false||Math.abs(off)>3)?'none':'';
+      it.style.transform='translateX(calc(-50% + '+(off*iw)+'px)) scale('+(off===0?1.39:1)+')';
+      it.classList.toggle('active',off===0);
+      it.classList.toggle('near',Math.abs(off)===1);
+      it.style.zIndex=off===0?5:(Math.abs(off)===1?3:1);
+    });
     renderInfo();
   }
   document.querySelector('.hc-prev').addEventListener('click',e=>{e.stopPropagation();ci=(ci-1+N)%N;si=0;center();});
@@ -859,7 +871,7 @@ document.querySelectorAll('.grid .reveal').forEach((el,i)=>el.style.setProperty(
   let sx=0,drag=false,moved=0,swiped=false;
   vp.addEventListener('click',function(e){ if(swiped){swiped=false;return;} var iw=items[0].offsetWidth||150; var vr=vp.getBoundingClientRect(); var step=Math.round((e.clientX-(vr.left+vp.clientWidth/2))/iw); if(step<-2)step=-2; if(step>2)step=2; if(step!==0){ ci=((ci+step)%N+N)%N; si=0; center(); } });
   vp.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;drag=true;moved=0;swiped=false;track.style.transition='none';},{passive:true});
-  vp.addEventListener('touchmove',e=>{if(!drag)return;moved=e.touches[0].clientX-sx;const iw=items[0].offsetWidth||150;const base=vp.clientWidth/2-(ci*iw+iw/2);track.style.transform='translateX('+(base+moved)+'px)';},{passive:true});
+  vp.addEventListener('touchmove',e=>{if(!drag)return;moved=e.touches[0].clientX-sx;},{passive:true});
   vp.addEventListener('touchend',()=>{const iw=items[0].offsetWidth||150;if(moved<-iw*0.28){ci=(ci+1)%N;si=0;swiped=true;}else if(moved>iw*0.28){ci=(ci-1+N)%N;si=0;swiped=true;}moved=0;drag=false;center();});
   addEventListener('resize',()=>center(false));
   requestAnimationFrame(()=>center(false)); setTimeout(()=>center(false),300);
